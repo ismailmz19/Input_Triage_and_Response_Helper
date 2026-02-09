@@ -1,0 +1,35 @@
+# Input Triage & Response Helper - Configuration
+# INSE 6450 - Winter 2026
+
+data:
+  raw_path: "data/raw/emails.csv"
+  processed_path: "data/processed/"
+  min_word_count: 10
+  max_word_count: 500
+
+features:
+  tfidf:
+    max_features: 10000
+    ngram_range: [1, 2]
+    min_df: 5
+    max_df: 0.95
+    sublinear_tf: true
+
+labels:
+  categories:
+    - "Urgent"
+    - "Needs Reply"
+    - "Informational"
+    - "Scheduling"
+    - "Spam/Low Priority"
+  priority_order:
+    - "Urgent"
+    - "Scheduling"
+    - "Needs Reply"
+    - "Informational"
+    - "Spam/Low Priority"
+
+model:
+  test_size: 0.2
+  random_state: 42
+  class_weight: "balanced"
