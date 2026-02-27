@@ -1,0 +1,14 @@
+MLP Classifier — Test Set Results
+==================================================
+
+                   precision    recall  f1-score   support
+
+    Informational       0.90      0.61      0.73      7893
+      Needs Reply       0.65      0.93      0.77     10765
+       Scheduling       0.90      0.70      0.79      9114
+Spam/Low Priority       0.84      0.84      0.84      4464
+           Urgent       0.59      0.65      0.62      1306
+
+         accuracy                           0.77     33542
+        macro avg       0.78      0.75      0.75     33542
+     weighted avg       0.80      0.77      0.77     33542

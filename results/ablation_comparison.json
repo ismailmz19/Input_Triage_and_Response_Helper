@@ -1,0 +1,13 @@
+{
+  "logistic_regression_baseline": {
+    "test_macro_f1": 0.7066,
+    "training_time_sec": 136.2,
+    "model_type": "LogisticRegression (balanced class weights)"
+  },
+  "mlp_final_model": {
+    "test_macro_f1": 0.7491,
+    "training_time_sec": 1171.66,
+    "model_type": "PyTorch MLP [512, 256, 128]"
+  },
+  "f1_improvement": 0.0424
+}

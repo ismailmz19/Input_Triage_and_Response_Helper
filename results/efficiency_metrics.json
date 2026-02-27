@@ -1,0 +1,55 @@
+{
+  "classification_metrics": {
+    "accuracy": 0.7684,
+    "precision_macro": 0.7799,
+    "precision_micro": 0.7684,
+    "recall_macro": 0.745,
+    "recall_micro": 0.7684,
+    "f1_macro": 0.7491,
+    "f1_micro": 0.7684,
+    "auroc_macro_ovr": 0.9626,
+    "pr_auc_macro": 0.8631
+  },
+  "efficiency_metrics": {
+    "hardware": {
+      "device": "cpu",
+      "cpu": "CPU (no GPU)",
+      "note": "All measurements on CPU unless CUDA available"
+    },
+    "training_efficiency": {
+      "total_training_time_sec": 1171.66,
+      "avg_time_per_epoch_sec": 108.3,
+      "actual_epochs_trained": 10,
+      "batch_size": 256
+    },
+    "model_size": {
+      "on_disk_mb": 20.22,
+      "total_parameters": 5296901,
+      "trainable_parameters": 5296901,
+      "estimated_flops_per_sample": 10588416,
+      "estimated_gflops": 0.010588
+    },
+    "inference_latency": {
+      "n_samples_measured": 500,
+      "p50_latency_ms": 2.0026,
+      "p90_latency_ms": 2.4149,
+      "p95_latency_ms": 2.6351,
+      "batch_latency_ms": 23.4193,
+      "batch_size_used": 256
+    },
+    "inference_throughput": {
+      "samples_per_second": 10931.2,
+      "batch_size": 256
+    },
+    "memory_footprint": {
+      "peak_ram_inference_mb": 0.0662
+    },
+    "slo_targets": {
+      "p95_latency_target_ms": 50,
+      "p95_latency_achieved_ms": 2.6351,
+      "p95_latency_met": true,
+      "min_f1_target": 0.7,
+      "note": "SLO targets defined for Milestone 4 deployment"
+    }
+  }
+}

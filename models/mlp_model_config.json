@@ -1,0 +1,28 @@
+{
+  "seed": 42,
+  "test_size": 0.15,
+  "val_size": 0.15,
+  "hidden_dims": [
+    512,
+    256,
+    128
+  ],
+  "dropout": 0.3,
+  "learning_rate": 0.001,
+  "weight_decay": 0.0001,
+  "batch_size": 256,
+  "epochs": 50,
+  "early_stopping_patience": 7,
+  "optimizer": "Adam",
+  "loss": "CrossEntropyLoss (class-weighted)",
+  "activation": "ReLU",
+  "num_classes": 5,
+  "input_dim": 10019,
+  "total_parameters": 5296901,
+  "trainable_parameters": 5296901,
+  "actual_epochs_trained": 10,
+  "best_epoch": 3,
+  "best_val_f1": 0.7524,
+  "avg_time_per_epoch_sec": 108.3,
+  "total_training_time_sec": 1171.66
+}
