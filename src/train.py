@@ -393,17 +393,28 @@ def main():
     )
 
     # ── Ablation: Logistic Regression Baseline ─
+    # Use 'saga' solver which works natively on sparse matrices (no .toarray() needed)
+    # Subsample to 30k training examples to keep memory manageable on CPU
     print("\n[6/6] Training Logistic Regression baseline (ablation)...")
     t_lr = time.time()
     lr_model = LogisticRegression(
         max_iter=1000, random_state=SEED,
-        class_weight="balanced", solver="lbfgs", multi_class="multinomial"
+        class_weight="balanced", solver="saga", multi_class="multinomial",
+        n_jobs=-1
     )
-    X_train_dense = X_train.toarray() if issparse(X_train) else X_train
-    X_test_dense  = X_test.toarray()  if issparse(X_test)  else X_test
-    lr_model.fit(X_train_dense, y_train)
+    # Subsample training set if too large to avoid OOM
+    MAX_LR_SAMPLES = 30000
+    if len(y_train) > MAX_LR_SAMPLES:
+        idx = np.random.RandomState(SEED).choice(len(y_train), MAX_LR_SAMPLES, replace=False)
+        X_lr_train = X_train[idx]
+        y_lr_train = y_train[idx]
+        print(f"    Subsampled to {MAX_LR_SAMPLES:,} samples for LogReg baseline")
+    else:
+        X_lr_train = X_train
+        y_lr_train = y_train
+    lr_model.fit(X_lr_train, y_lr_train)
     lr_train_time = time.time() - t_lr
-    lr_preds = lr_model.predict(X_test_dense)
+    lr_preds = lr_model.predict(X_test)
     lr_f1 = f1_score(y_test, lr_preds, average="macro", zero_division=0)
 
     ablation = {
