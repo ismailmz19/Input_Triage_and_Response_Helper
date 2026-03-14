@@ -1,0 +1,146 @@
+{
+  "baseline": {
+    "f1_macro": 0.7491,
+    "accuracy": 0.7684,
+    "latency_p50_ms": 2.1508,
+    "latency_p90_ms": 2.4327
+  },
+  "calibration": {
+    "brier_score": 0.06359923459706467,
+    "mean_max_conf": 0.8132,
+    "fraction_correct": 0.7684
+  },
+  "robustness_by_perturbation": {
+    "token_dropout": {
+      "severities": [
+        0.0,
+        0.1,
+        0.2,
+        0.3,
+        0.4,
+        0.5
+      ],
+      "f1_macro": [
+        0.7491,
+        0.7098,
+        0.6948,
+        0.6799,
+        0.6602,
+        0.6355
+      ],
+      "accuracy": [
+        0.7684,
+        0.739,
+        0.7246,
+        0.7133,
+        0.6966,
+        0.6777
+      ],
+      "latency_p50_ms": [
+        2.0007,
+        1.9181,
+        2.0041,
+        1.9585,
+        1.7577,
+        2.4196
+      ],
+      "latency_p90_ms": [
+        2.3422,
+        2.2306,
+        2.2623,
+        2.2131,
+        2.0015,
+        2.7378
+      ]
+    },
+    "character_noise": {
+      "severities": [
+        0.0,
+        0.1,
+        0.2,
+        0.3,
+        0.4,
+        0.5
+      ],
+      "f1_macro": [
+        0.7491,
+        0.607,
+        0.5084,
+        0.4322,
+        0.384,
+        0.3583
+      ],
+      "accuracy": [
+        0.7684,
+        0.657,
+        0.5784,
+        0.5173,
+        0.4785,
+        0.4585
+      ],
+      "latency_p50_ms": [
+        1.9815,
+        2.3339,
+        1.9672,
+        1.9922,
+        1.7892,
+        4.5661
+      ],
+      "latency_p90_ms": [
+        2.1966,
+        2.683,
+        2.2706,
+        2.2268,
+        2.0754,
+        7.1873
+      ]
+    },
+    "synonym_swap": {
+      "severities": [
+        0.0,
+        0.1,
+        0.2,
+        0.3,
+        0.4,
+        0.5
+      ],
+      "f1_macro": [
+        0.7491,
+        0.7222,
+        0.7183,
+        0.7162,
+        0.7152,
+        0.7141
+      ],
+      "accuracy": [
+        0.7684,
+        0.7492,
+        0.7461,
+        0.7442,
+        0.7427,
+        0.7417
+      ],
+      "latency_p50_ms": [
+        2.3307,
+        2.4998,
+        2.6497,
+        2.4255,
+        2.5377,
+        2.3892
+      ],
+      "latency_p90_ms": [
+        2.9098,
+        2.9745,
+        3.2384,
+        3.0326,
+        3.0041,
+        2.8702
+      ]
+    }
+  },
+  "adversarial_notes": {
+    "white_box": "Not applicable \u2014 TF-IDF features are non-differentiable; gradient-based attacks (FGSM/PGD) cannot propagate through the sparse vectorizer.",
+    "grey_box": "Synonym swap adversary (knowledge of vocabulary; no model access). Simulates a human rephrasing emails to evade classification.",
+    "black_box": "Character noise adversary (no model knowledge; perturbs raw text). Simulates typos, OCR errors, or deliberate obfuscation."
+  }
+}

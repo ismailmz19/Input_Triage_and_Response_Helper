@@ -1,0 +1,112 @@
+[
+  {
+    "rank": 1,
+    "text_snippet": "Mustafa   I finally found Nav.  nrahemtulla@thecampus.com  I am moving to Houston to trade power in the Northeastern US....",
+    "true_label": "Urgent",
+    "predicted_label": "Needs Reply",
+    "confidence": 0.9983,
+    "why_failed": "Low-priority email with a question; model classifies as Needs Reply",
+    "mitigation_idea": "Add sender reputation score; down-weight question mark for unknown senders",
+    "resolved": true,
+    "resolved_note": "After sanitization: still wrong \u2192 'Needs Reply'"
+  },
+  {
+    "rank": 2,
+    "text_snippet": "8th Floor, 29 Bressenden Place London  SW1E 5DR Tel : +44 171 915 5100 Fax:  +44 171 915 5101 Conference Bookings: +44 1...",
+    "true_label": "Scheduling",
+    "predicted_label": "Urgent",
+    "confidence": 0.9978,
+    "why_failed": "Long informational email resembles newsletter; classified as Spam",
+    "mitigation_idea": "Use domain whitelist to distinguish newsletters from spam",
+    "resolved": true,
+    "resolved_note": "After sanitization: still wrong \u2192 'Urgent'"
+  },
+  {
+    "rank": 3,
+    "text_snippet": "Notice Number: 01-391 November 21, 2001  TO: ALL COMEX DIVISION MEMBERS ALL NYMEX DIVISION MEMBERS  FROM: J. Robert Coll...",
+    "true_label": "Spam/Low Priority",
+    "predicted_label": "Urgent",
+    "confidence": 0.9969,
+    "why_failed": "Feature overlap between classes",
+    "mitigation_idea": "Collect more examples of this class pair",
+    "resolved": false,
+    "resolved_note": ""
+  },
+  {
+    "rank": 4,
+    "text_snippet": "Need to hear ASAP whether you have any problems with this counterparty....",
+    "true_label": "Informational",
+    "predicted_label": "Urgent",
+    "confidence": 0.9964,
+    "why_failed": "Urgent email buried in long thread; spam-like length triggered low-priority label",
+    "mitigation_idea": "Normalize email length feature; add thread depth signal",
+    "resolved": false,
+    "resolved_note": ""
+  },
+  {
+    "rank": 5,
+    "text_snippet": "actually its tomorrow, Mar 5, 310 Fisher Rd. Humble Texas ( key map 335y) Time previews begin at 9am, sales begin 10am,...",
+    "true_label": "Urgent",
+    "predicted_label": "Needs Reply",
+    "confidence": 0.9958,
+    "why_failed": "Low-priority email with a question; model classifies as Needs Reply",
+    "mitigation_idea": "Add sender reputation score; down-weight question mark for unknown senders",
+    "resolved": false,
+    "resolved_note": ""
+  },
+  {
+    "rank": 6,
+    "text_snippet": "Please bookout the following deals;  Deal 643754 with deal 759487 for May and  June....",
+    "true_label": "Scheduling",
+    "predicted_label": "Spam/Low Priority",
+    "confidence": 0.9949,
+    "why_failed": "Feature overlap between classes",
+    "mitigation_idea": "Collect more examples of this class pair",
+    "resolved": false,
+    "resolved_note": ""
+  },
+  {
+    "rank": 7,
+    "text_snippet": "Many thanks!   From: Suzanne Adams@ECT on 03/05/2001 11:07 AM To: Kay Mann/Corp/Enron@Enron cc:    Subject: C. Kay Mann...",
+    "true_label": "Informational",
+    "predicted_label": "Needs Reply",
+    "confidence": 0.9948,
+    "why_failed": "Urgent email lacks explicit urgency keywords; model defaults to Needs Reply",
+    "mitigation_idea": "Add sender priority metadata feature; boost urgency keyword weight",
+    "resolved": false,
+    "resolved_note": ""
+  },
+  {
+    "rank": 8,
+    "text_snippet": "Would you see if we have a discount for gas flowing from 500L to Carnes on Sep 14th?  We had discounts before and after...",
+    "true_label": "Needs Reply",
+    "predicted_label": "Spam/Low Priority",
+    "confidence": 0.9946,
+    "why_failed": "Feature overlap between classes",
+    "mitigation_idea": "Collect more examples of this class pair",
+    "resolved": false,
+    "resolved_note": ""
+  },
+  {
+    "rank": 9,
+    "text_snippet": "You know, we've done something the last few tuesdays, and it is now my  favorite day of the week!  I had a great time....",
+    "true_label": "Scheduling",
+    "predicted_label": "Needs Reply",
+    "confidence": 0.9945,
+    "why_failed": "Informational email ends with question; model assumes reply needed",
+    "mitigation_idea": "Detect rhetorical vs. genuine questions using punctuation context",
+    "resolved": false,
+    "resolved_note": ""
+  },
+  {
+    "rank": 10,
+    "text_snippet": "From:  Larry Joe Hunter                           03/08/2001 04:38 PM \t  To: Eric Bass/HOU/ECT@ECT cc: Janie Aguayo/HOU/...",
+    "true_label": "Scheduling",
+    "predicted_label": "Needs Reply",
+    "confidence": 0.994,
+    "why_failed": "Informational email ends with question; model assumes reply needed",
+    "mitigation_idea": "Detect rhetorical vs. genuine questions using punctuation context",
+    "resolved": false,
+    "resolved_note": ""
+  }
+]
