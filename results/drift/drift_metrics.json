@@ -1,0 +1,110 @@
+{
+  "drift_scenarios": {
+    "class_prior_shift": {
+      "clean": {
+        "f1_macro": 0.7491,
+        "accuracy": 0.7684,
+        "latency_p50_ms": 2.5117,
+        "latency_p90_ms": 3.1153
+      },
+      "before": {
+        "f1_macro": 0.7509,
+        "accuracy": 0.7396,
+        "latency_p50_ms": 2.7381,
+        "latency_p90_ms": 3.3445
+      },
+      "after": {
+        "f1_macro": 0.8026,
+        "accuracy": 0.8006,
+        "latency_p50_ms": 2.6712,
+        "latency_p90_ms": 3.6902
+      }
+    },
+    "feature_mean_shift": {
+      "clean": {
+        "f1_macro": 0.7491,
+        "accuracy": 0.7684,
+        "latency_p50_ms": 2.5117,
+        "latency_p90_ms": 3.1153
+      },
+      "before": {
+        "f1_macro": 0.3043,
+        "accuracy": 0.4188,
+        "latency_p50_ms": 2.0329,
+        "latency_p90_ms": 2.7028
+      },
+      "after": {
+        "f1_macro": 0.4716,
+        "accuracy": 0.5345,
+        "latency_p50_ms": 1.9949,
+        "latency_p90_ms": 2.5737
+      }
+    },
+    "text_domain_shift": {
+      "clean": {
+        "f1_macro": 0.7491,
+        "accuracy": 0.7684,
+        "latency_p50_ms": 2.5117,
+        "latency_p90_ms": 3.1153
+      },
+      "before": {
+        "f1_macro": 0.6667,
+        "accuracy": 0.6903,
+        "latency_p50_ms": 2.0899,
+        "latency_p90_ms": 2.836
+      },
+      "after": {
+        "f1_macro": 0.6861,
+        "accuracy": 0.7026,
+        "latency_p50_ms": 2.6559,
+        "latency_p90_ms": 3.8581
+      }
+    }
+  },
+  "adaptation_strategy": {
+    "method": "Incremental head fine-tuning",
+    "description": "Freeze all hidden layers; retrain only the final classification layer on drifted data",
+    "rationale": "Preserves learned feature representations while adapting decision boundaries to new distribution",
+    "epochs": 10,
+    "optimizer": "Adam (lr=1e-3)",
+    "max_train_samples": 10000
+  },
+  "versioning": {
+    "original_model": "models/mlp_model.pth",
+    "original_config": "models/mlp_model_config.json",
+    "adapted_model": "models/mlp_model_adapted.pth",
+    "adapted_config": "models/mlp_model_adapted_config.json",
+    "label_encoder": "models/label_encoder.joblib",
+    "feature_pipeline": "data/processed/feature_pipeline.joblib"
+  },
+  "update_triggers": {
+    "drift_threshold": "PSI > 0.2 on any of top-10 TF-IDF features for >= 3 consecutive windows",
+    "kpi_drop": "Rolling macro F1 drops > 0.05 below baseline for >= 2 monitoring windows",
+    "operational": "New email domain onboarded, seasonal campaign detected, organizational restructure",
+    "cadence": "Monthly periodic check + event-driven triggers",
+    "label_acquisition": "Weak supervision rules updated by domain expert; spot-check 200 emails per cycle"
+  },
+  "retraining_plans": {
+    "mild_drift": "Head fine-tuning (current approach) \u2014 fast, low cost, preserves representations",
+    "moderate_drift": "Full retrain with mixed old + new data (80/20 ratio) \u2014 preserves stability",
+    "severe_drift": "Full retrain on new data only + re-run feature_extraction.py to rebuild TF-IDF vocab"
+  },
+  "model_size": {
+    "original_mb": 20.22,
+    "adapted_mb": 20.2202,
+    "size_change": "No change \u2014 head fine-tuning does not alter model architecture or size"
+  },
+  "deployment_changes": {
+    "changes_needed": [
+      "Add confidence threshold abstention (threshold=0.7) to predict.py based on stress test findings",
+      "Add pre-flight schema check before feature extraction in production pipeline",
+      "Version model artifacts with timestamp to enable rollback",
+      "Add TF-IDF vocabulary refresh trigger when OOV rate exceeds 15%"
+    ],
+    "no_changes_needed": [
+      "Model architecture remains optimal \u2014 MLP is lightweight and CPU-deployable",
+      "Feature pipeline structure is stable \u2014 no new feature families needed",
+      "Response template system is drift-agnostic \u2014 keyword matching is robust"
+    ]
+  }
+}
