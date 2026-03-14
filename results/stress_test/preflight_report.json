@@ -1,0 +1,44 @@
+{
+  "schema_check": {
+    "expected_features": 10019,
+    "actual_features": 10019,
+    "passed": true,
+    "action": "PASS"
+  },
+  "null_rate_check": {
+    "zero_rows": 0,
+    "total_rows": 33542,
+    "null_rate": 0.0,
+    "threshold": 0.05,
+    "passed": true,
+    "action": "PASS"
+  },
+  "feature_range_check": {
+    "metadata_mean_norm": 0.0142,
+    "metadata_std_mean": 0.9822,
+    "out_of_range_rows": 112,
+    "out_of_range_rate": 0.0033,
+    "threshold": 0.1,
+    "passed": true,
+    "action": "PASS"
+  },
+  "class_distribution_check": {
+    "class_counts": {
+      "Informational": 7893,
+      "Needs Reply": 10765,
+      "Scheduling": 9114,
+      "Spam/Low Priority": 4464,
+      "Urgent": 1306
+    },
+    "min_class_count": 1306,
+    "threshold": 50,
+    "passed": true,
+    "action": "PASS"
+  },
+  "tfidf_sparsity_check": {
+    "sparsity_ratio": 0.9929,
+    "threshold_min": 0.9,
+    "passed": true,
+    "action": "PASS"
+  }
+}

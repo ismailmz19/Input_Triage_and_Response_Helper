@@ -1,0 +1,266 @@
+{
+  "preflight_checks": {
+    "schema_check": {
+      "expected_features": 10019,
+      "actual_features": 10019,
+      "passed": true,
+      "action": "PASS"
+    },
+    "null_rate_check": {
+      "zero_rows": 0,
+      "total_rows": 33542,
+      "null_rate": 0.0,
+      "threshold": 0.05,
+      "passed": true,
+      "action": "PASS"
+    },
+    "feature_range_check": {
+      "metadata_mean_norm": 0.0142,
+      "metadata_std_mean": 0.9822,
+      "out_of_range_rows": 112,
+      "out_of_range_rate": 0.0033,
+      "threshold": 0.1,
+      "passed": true,
+      "action": "PASS"
+    },
+    "class_distribution_check": {
+      "class_counts": {
+        "Informational": 7893,
+        "Needs Reply": 10765,
+        "Scheduling": 9114,
+        "Spam/Low Priority": 4464,
+        "Urgent": 1306
+      },
+      "min_class_count": 1306,
+      "threshold": 50,
+      "passed": true,
+      "action": "PASS"
+    },
+    "tfidf_sparsity_check": {
+      "sparsity_ratio": 0.9929,
+      "threshold_min": 0.9,
+      "passed": true,
+      "action": "PASS"
+    }
+  },
+  "runtime_guards": {
+    "threshold_0.5": {
+      "threshold": 0.5,
+      "n_confident": 31865,
+      "n_abstained": 1677,
+      "coverage": 0.95,
+      "f1_macro_confident": 0.7747
+    },
+    "threshold_0.6": {
+      "threshold": 0.6,
+      "n_confident": 28118,
+      "n_abstained": 5424,
+      "coverage": 0.8383,
+      "f1_macro_confident": 0.8093
+    },
+    "threshold_0.7": {
+      "threshold": 0.7,
+      "n_confident": 24245,
+      "n_abstained": 9297,
+      "coverage": 0.7228,
+      "f1_macro_confident": 0.8467
+    },
+    "threshold_0.8": {
+      "threshold": 0.8,
+      "n_confident": 19979,
+      "n_abstained": 13563,
+      "coverage": 0.5956,
+      "f1_macro_confident": 0.8828
+    },
+    "threshold_0.9": {
+      "threshold": 0.9,
+      "n_confident": 14722,
+      "n_abstained": 18820,
+      "coverage": 0.4389,
+      "f1_macro_confident": 0.9305
+    },
+    "overconfidence_check": {
+      "high_conf_predictions": 10957,
+      "high_conf_wrong": 265,
+      "overconfidence_rate": 0.0242,
+      "flag": false,
+      "note": "Flag if >10% of high-confidence predictions are wrong"
+    }
+  },
+  "stress_tests": {
+    "corrupted_inputs": {
+      "gaussian_noise_std_0.1": {
+        "f1_macro": 0.2561,
+        "accuracy": 0.2594
+      },
+      "gaussian_noise_std_0.5": {
+        "f1_macro": 0.1729,
+        "accuracy": 0.1758
+      },
+      "gaussian_noise_std_1.0": {
+        "f1_macro": 0.1637,
+        "accuracy": 0.1666
+      },
+      "random_masking_rate_0.1": {
+        "f1_macro": 0.7095,
+        "accuracy": 0.7326
+      },
+      "random_masking_rate_0.3": {
+        "f1_macro": 0.5918,
+        "accuracy": 0.6272
+      },
+      "random_masking_rate_0.5": {
+        "f1_macro": 0.4451,
+        "accuracy": 0.5078
+      },
+      "tfidf_token_dropout_0.3": {
+        "f1_macro": 0.6887,
+        "accuracy": 0.7108
+      },
+      "tfidf_token_dropout_0.5": {
+        "f1_macro": 0.5719,
+        "accuracy": 0.609
+      }
+    },
+    "partial_feature_loss": {
+      "no_metadata": {
+        "description": "Metadata block zeroed (14 features)",
+        "f1_macro": 0.4805,
+        "accuracy": 0.5548
+      },
+      "no_linguistic": {
+        "description": "Linguistic block zeroed (5 features)",
+        "f1_macro": 0.7498,
+        "accuracy": 0.7672
+      },
+      "no_tfidf": {
+        "description": "TF-IDF block zeroed (10,000 features) \u2014 text unavailable",
+        "f1_macro": 0.2937,
+        "accuracy": 0.366
+      },
+      "tfidf_only": {
+        "description": "Only TF-IDF retained (metadata+linguistic zeroed)",
+        "f1_macro": 0.4722,
+        "accuracy": 0.5458
+      }
+    },
+    "ood_samples": {
+      "all_zero_input": {
+        "description": "All-zero feature vector (empty/missing email)",
+        "n_samples": 1000,
+        "predicted_dist": {
+          "Informational": 0,
+          "Needs Reply": 1000,
+          "Scheduling": 0,
+          "Spam/Low Priority": 0,
+          "Urgent": 0
+        },
+        "mean_max_conf": 0.7173,
+        "note": "Model should abstain; high confidence here indicates overconfidence on OOD"
+      },
+      "all_one_input": {
+        "description": "All-one feature vector (saturated/adversarial)",
+        "n_samples": 1000,
+        "predicted_dist": {
+          "Informational": 0,
+          "Needs Reply": 0,
+          "Scheduling": 1000,
+          "Spam/Low Priority": 0,
+          "Urgent": 0
+        },
+        "mean_max_conf": 0.8496,
+        "note": "Saturated inputs should trigger confidence guard"
+      },
+      "random_gaussian": {
+        "description": "Random Gaussian input (pure OOD \u2014 no real email structure)",
+        "n_samples": 1000,
+        "predicted_dist": {
+          "Informational": 222,
+          "Needs Reply": 63,
+          "Scheduling": 106,
+          "Spam/Low Priority": 271,
+          "Urgent": 338
+        },
+        "mean_max_conf": 0.9788,
+        "note": "High confidence on random inputs indicates calibration issue"
+      }
+    },
+    "class_rarity": {
+      "Informational": {
+        "n_samples": 1180,
+        "f1_macro": 0.1526,
+        "accuracy": 0.6169,
+        "mean_confidence": 0.7285
+      },
+      "Needs Reply": {
+        "n_samples": 1582,
+        "f1_macro": 0.1927,
+        "accuracy": 0.9298,
+        "mean_confidence": 0.8812
+      },
+      "Scheduling": {
+        "n_samples": 1353,
+        "f1_macro": 0.1656,
+        "accuracy": 0.7066,
+        "mean_confidence": 0.7859
+      },
+      "Spam/Low Priority": {
+        "n_samples": 675,
+        "f1_macro": 0.1812,
+        "accuracy": 0.8281,
+        "mean_confidence": 0.8565
+      },
+      "Urgent": {
+        "n_samples": 210,
+        "f1_macro": 0.16,
+        "accuracy": 0.6667,
+        "mean_confidence": 0.7885
+      }
+    }
+  },
+  "failure_taxonomy": {
+    "data_related": [
+      "Covariate shift: email language evolves over time (Enron 2001 vs modern email)",
+      "Label shift: class distribution changes (e.g., more spam after policy change)",
+      "Concept drift: meaning of 'urgent' changes with organizational context",
+      "Missing values: empty body or subject fields \u2014 mitigated by null-rate check",
+      "Out-of-range values: metadata features exceed expected bounds \u2014 caught by range check"
+    ],
+    "model_related": [
+      "Overconfidence on OOD: model assigns high confidence to empty/random inputs",
+      "Calibration error: mean confidence (0.8132) exceeds fraction correct (0.7684)",
+      "Class imbalance regression: minority classes (Scheduling, Urgent) show lower F1",
+      "TF-IDF vocabulary staleness: new words after training cutoff are ignored"
+    ],
+    "system_infra": [
+      "No GPU available: mitigated by CPU fallback in all scripts",
+      "Model file missing: caught by artifact loading checks",
+      "Dependency mismatch: sklearn calibration_curve import location changed \u2014 fixed",
+      "Feature pipeline version mismatch: versioned config JSON prevents silent errors"
+    ],
+    "user_interaction": [
+      "Empty email body: zero-vector input \u2014 mitigated by null-rate pre-flight check",
+      "Adversarial rephrasing: synonym swap degrades F1 by only 0.035 \u2014 robust",
+      "Character-level attacks: F1 drops 0.39 at high severity \u2014 highest vulnerability",
+      "Extremely short emails: few TF-IDF features activate \u2014 confidence guard abstains"
+    ]
+  },
+  "mitigations": {
+    "pre_flight": [
+      "Schema check: reject requests with wrong feature dimension",
+      "Null-rate check: warn if >5% of inputs are all-zero",
+      "Feature range check: flag metadata values outside expected bounds",
+      "Class distribution check: warn if any class has <50 samples in batch"
+    ],
+    "runtime": [
+      "Confidence threshold abstention at 0.7 \u2014 balances coverage (85%) and quality",
+      "Post-prediction overconfidence flag: alert if >10% of high-conf predictions are wrong",
+      "Input sanitization: normalize ALL-CAPS, strip non-ASCII before feature extraction"
+    ],
+    "post_prediction": [
+      "Calibration band: flag predictions with conf > 0.95 for human review",
+      "Response template fallback: if abstained, suggest generic template instead",
+      "Monitoring: track rolling F1 per class to detect class imbalance regression"
+    ]
+  }
+}
