@@ -1,0 +1,66 @@
+[
+  {
+    "type": "F1_DROP_ALERT",
+    "window": 5,
+    "metric": "f1_macro",
+    "value": 0.3728,
+    "baseline": 0.7464,
+    "drop": 0.3736,
+    "threshold": 0.05,
+    "action": "INVESTIGATE_DATA_QUALITY",
+    "message": "F1 dropped 0.3736 below baseline"
+  },
+  {
+    "type": "PSI_WARN",
+    "window": 6,
+    "metric": "psi_metadata",
+    "value": 0.1982,
+    "threshold": 0.1,
+    "action": "INCREASE_MONITORING",
+    "message": "Metadata PSI=0.1982 > 0.1 \u2014 moderate drift detected"
+  },
+  {
+    "type": "F1_DROP_ALERT",
+    "window": 6,
+    "metric": "f1_macro",
+    "value": 0.2905,
+    "baseline": 0.7464,
+    "drop": 0.4558,
+    "threshold": 0.05,
+    "action": "INVESTIGATE_DATA_QUALITY",
+    "message": "F1 dropped 0.4558 below baseline"
+  },
+  {
+    "type": "F1_DROP_ALERT",
+    "window": 7,
+    "metric": "f1_macro",
+    "value": 0.2106,
+    "baseline": 0.7464,
+    "drop": 0.5358,
+    "threshold": 0.05,
+    "action": "INVESTIGATE_DATA_QUALITY",
+    "message": "F1 dropped 0.5358 below baseline"
+  },
+  {
+    "type": "F1_DROP_ALERT",
+    "window": 8,
+    "metric": "f1_macro",
+    "value": 0.1969,
+    "baseline": 0.7464,
+    "drop": 0.5495,
+    "threshold": 0.05,
+    "action": "INVESTIGATE_DATA_QUALITY",
+    "message": "F1 dropped 0.5495 below baseline"
+  },
+  {
+    "type": "F1_DROP_ALERT",
+    "window": 9,
+    "metric": "f1_macro",
+    "value": 0.1846,
+    "baseline": 0.7464,
+    "drop": 0.5618,
+    "threshold": 0.05,
+    "action": "INVESTIGATE_DATA_QUALITY",
+    "message": "F1 dropped 0.5618 below baseline"
+  }
+]

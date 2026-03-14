@@ -1,0 +1,275 @@
+{
+  "monitoring_config": {
+    "n_windows": 10,
+    "window_size": 1000,
+    "drift_start": 5,
+    "psi_warn": 0.1,
+    "psi_alert": 0.2,
+    "f1_drop_alert": 0.05,
+    "conf_drop_alert": 0.05
+  },
+  "reference_window": {
+    "f1_macro": 0.7464,
+    "auroc": 0.9666
+  },
+  "window_metrics": [
+    {
+      "window": 0,
+      "n_samples": 1000,
+      "f1_macro": 0.7464,
+      "auroc": 0.9666,
+      "mean_confidence": 0.8098,
+      "std_confidence": 0.1765,
+      "psi_metadata": 0.0,
+      "psi_confidence": 0.0,
+      "kl_class_dist": 0.0,
+      "js_class_dist": 0.0,
+      "class_distribution": {
+        "Informational": 0.24,
+        "Needs Reply": 0.309,
+        "Scheduling": 0.277,
+        "Spam/Low Priority": 0.137,
+        "Urgent": 0.037
+      },
+      "alerts": 0,
+      "alert_types": []
+    },
+    {
+      "window": 1,
+      "n_samples": 1000,
+      "f1_macro": 0.7356,
+      "auroc": 0.9622,
+      "mean_confidence": 0.8177,
+      "std_confidence": 0.1714,
+      "psi_metadata": 0.0201,
+      "psi_confidence": 0.044,
+      "kl_class_dist": 0.0029,
+      "js_class_dist": 0.0007,
+      "class_distribution": {
+        "Informational": 0.257,
+        "Needs Reply": 0.326,
+        "Scheduling": 0.253,
+        "Spam/Low Priority": 0.124,
+        "Urgent": 0.04
+      },
+      "alerts": 0,
+      "alert_types": []
+    },
+    {
+      "window": 2,
+      "n_samples": 1000,
+      "f1_macro": 0.7344,
+      "auroc": 0.9578,
+      "mean_confidence": 0.8141,
+      "std_confidence": 0.1673,
+      "psi_metadata": 0.0146,
+      "psi_confidence": 0.0402,
+      "kl_class_dist": 0.0003,
+      "js_class_dist": 0.0001,
+      "class_distribution": {
+        "Informational": 0.24,
+        "Needs Reply": 0.301,
+        "Scheduling": 0.278,
+        "Spam/Low Priority": 0.141,
+        "Urgent": 0.04
+      },
+      "alerts": 0,
+      "alert_types": []
+    },
+    {
+      "window": 3,
+      "n_samples": 1000,
+      "f1_macro": 0.7536,
+      "auroc": 0.9672,
+      "mean_confidence": 0.8123,
+      "std_confidence": 0.1699,
+      "psi_metadata": 0.0222,
+      "psi_confidence": 0.0231,
+      "kl_class_dist": 0.0014,
+      "js_class_dist": 0.0004,
+      "class_distribution": {
+        "Informational": 0.247,
+        "Needs Reply": 0.324,
+        "Scheduling": 0.262,
+        "Spam/Low Priority": 0.136,
+        "Urgent": 0.031
+      },
+      "alerts": 0,
+      "alert_types": []
+    },
+    {
+      "window": 4,
+      "n_samples": 1000,
+      "f1_macro": 0.7291,
+      "auroc": 0.961,
+      "mean_confidence": 0.8101,
+      "std_confidence": 0.1761,
+      "psi_metadata": 0.0141,
+      "psi_confidence": 0.0176,
+      "kl_class_dist": 0.0006,
+      "js_class_dist": 0.0001,
+      "class_distribution": {
+        "Informational": 0.252,
+        "Needs Reply": 0.3,
+        "Scheduling": 0.279,
+        "Spam/Low Priority": 0.135,
+        "Urgent": 0.034
+      },
+      "alerts": 0,
+      "alert_types": []
+    },
+    {
+      "window": 5,
+      "n_samples": 1000,
+      "f1_macro": 0.3728,
+      "auroc": 0.849,
+      "mean_confidence": 0.8556,
+      "std_confidence": 0.1633,
+      "psi_metadata": 0.0239,
+      "psi_confidence": 0.206,
+      "kl_class_dist": 0.0803,
+      "js_class_dist": 0.0235,
+      "class_distribution": {
+        "Informational": 0.195,
+        "Needs Reply": 0.297,
+        "Scheduling": 0.225,
+        "Spam/Low Priority": 0.123,
+        "Urgent": 0.16
+      },
+      "alerts": 1,
+      "alert_types": [
+        "F1_DROP_ALERT"
+      ]
+    },
+    {
+      "window": 6,
+      "n_samples": 1000,
+      "f1_macro": 0.2905,
+      "auroc": 0.7708,
+      "mean_confidence": 0.8528,
+      "std_confidence": 0.1602,
+      "psi_metadata": 0.1982,
+      "psi_confidence": 0.1337,
+      "kl_class_dist": 0.1415,
+      "js_class_dist": 0.0419,
+      "class_distribution": {
+        "Informational": 0.186,
+        "Needs Reply": 0.275,
+        "Scheduling": 0.229,
+        "Spam/Low Priority": 0.09,
+        "Urgent": 0.22
+      },
+      "alerts": 2,
+      "alert_types": [
+        "PSI_WARN",
+        "F1_DROP_ALERT"
+      ]
+    },
+    {
+      "window": 7,
+      "n_samples": 1000,
+      "f1_macro": 0.2106,
+      "auroc": 0.6946,
+      "mean_confidence": 0.8639,
+      "std_confidence": 0.1616,
+      "psi_metadata": 0.0288,
+      "psi_confidence": 0.2915,
+      "kl_class_dist": 0.21,
+      "js_class_dist": 0.0626,
+      "class_distribution": {
+        "Informational": 0.178,
+        "Needs Reply": 0.26,
+        "Scheduling": 0.18,
+        "Spam/Low Priority": 0.102,
+        "Urgent": 0.28
+      },
+      "alerts": 1,
+      "alert_types": [
+        "F1_DROP_ALERT"
+      ]
+    },
+    {
+      "window": 8,
+      "n_samples": 1000,
+      "f1_macro": 0.1969,
+      "auroc": 0.6778,
+      "mean_confidence": 0.9031,
+      "std_confidence": 0.1438,
+      "psi_metadata": 0.0283,
+      "psi_confidence": 1.0408,
+      "kl_class_dist": 0.2819,
+      "js_class_dist": 0.0843,
+      "class_distribution": {
+        "Informational": 0.171,
+        "Needs Reply": 0.204,
+        "Scheduling": 0.201,
+        "Spam/Low Priority": 0.085,
+        "Urgent": 0.339
+      },
+      "alerts": 1,
+      "alert_types": [
+        "F1_DROP_ALERT"
+      ]
+    },
+    {
+      "window": 9,
+      "n_samples": 1000,
+      "f1_macro": 0.1846,
+      "auroc": 0.6402,
+      "mean_confidence": 0.8986,
+      "std_confidence": 0.1466,
+      "psi_metadata": 0.0522,
+      "psi_confidence": 1.0284,
+      "kl_class_dist": 0.3697,
+      "js_class_dist": 0.1098,
+      "class_distribution": {
+        "Informational": 0.136,
+        "Needs Reply": 0.206,
+        "Scheduling": 0.167,
+        "Spam/Low Priority": 0.091,
+        "Urgent": 0.4
+      },
+      "alerts": 1,
+      "alert_types": [
+        "F1_DROP_ALERT"
+      ]
+    }
+  ],
+  "total_alerts": 6,
+  "monitoring_plan": {
+    "data_quality": [
+      "Schema checks: feature dimension validated before every prediction batch",
+      "Null rate: alert if >5% of inputs are all-zero in a window",
+      "Distribution stats: PSI on metadata features per window (warn>0.1, alert>0.2)",
+      "Rare-category presence: flag if any class drops below 3% of window",
+      "Drift detector: PSI + KL divergence computed every 1,000 emails"
+    ],
+    "model_quality": [
+      "Online proxy: mean confidence per window (drop >5% triggers alert)",
+      "Rolling F1: computed per window using weak-supervision labels as proxy",
+      "Rolling AUROC: computed per window for ranking quality",
+      "Class distribution shift: KL divergence on predicted class distribution",
+      "Delayed truth: re-evaluate F1 monthly when human-reviewed labels arrive"
+    ],
+    "architecture": {
+      "metric_logging": "Server-side batch logging (per 1,000 email window)",
+      "storage": "JSON logs retained for 90 days; aggregated stats for 1 year",
+      "batching_window": "1,000 emails or 24 hours, whichever comes first",
+      "retention": "Raw predictions: 30 days | Aggregated metrics: 1 year"
+    },
+    "alerting": {
+      "psi_warn": "PSI > 0.1: increase monitoring frequency to every 500 emails",
+      "psi_alert": "PSI > 0.2: page on-call, trigger retraining pipeline",
+      "f1_drop": "F1 drops > 0.05 below baseline: investigate data quality",
+      "confidence_drop": "Mean confidence drops > 0.05: check input preprocessing",
+      "runbook": [
+        "1. Verify data pipeline integrity (schema check, null rate)",
+        "2. Inspect recent emails for vocabulary shift or new email types",
+        "3. Run stress_test.py pre-flight checks on new batch",
+        "4. If PSI > 0.2: trigger drift_simulation.py head fine-tune",
+        "5. Deploy adapted model, monitor for 2 windows before retiring old model",
+        "6. If F1 does not recover: escalate to full retrain"
+      ]
+    }
+  }
+}
