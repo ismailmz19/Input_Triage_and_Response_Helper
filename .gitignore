@@ -25,3 +25,5 @@ Thumbs.db
 # IDE
 .vscode/
 .idea/
+
+!models/label_encoder.joblib
