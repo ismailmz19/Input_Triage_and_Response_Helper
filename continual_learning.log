@@ -1,0 +1,136 @@
+2026-04-02 20:46:56,540 [INFO] Continual Learning — self-contained demo (synthetic data)
+2026-04-02 20:47:01,032 [INFO] Pre-training proxy model on reference data ...
+2026-04-02 20:47:02,887 [INFO] ============================================================
+2026-04-02 20:47:02,887 [INFO] Starting Continual Learning Pipeline
+2026-04-02 20:47:02,891 [INFO] ============================================================
+2026-04-02 20:47:02,951 [INFO] 
+--- Time step 1 / 5 ---
+2026-04-02 20:47:02,961 [INFO]   Before update: {'accuracy': 0.9, 'macro_f1': 0.9013, 'f1_per_class': [0.9367, 0.8923, 0.9143, 0.8817, 0.8817]}
+2026-04-02 20:47:02,963 [INFO] PSI = 0.1351  (threshold=0.2)
+2026-04-02 20:47:02,966 [INFO] 
+--- Time step 2 / 5 ---
+2026-04-02 20:47:02,968 [INFO]   Before update: {'accuracy': 0.895, 'macro_f1': 0.8919, 'f1_per_class': [0.8286, 0.9535, 0.9176, 0.8571, 0.9024]}
+2026-04-02 20:47:02,968 [INFO] PSI = 0.1334  (threshold=0.2)
+2026-04-02 20:47:02,971 [INFO] 
+--- Time step 3 / 5 ---
+2026-04-02 20:47:02,974 [INFO]   Before update: {'accuracy': 0.44, 'macro_f1': 0.4316, 'f1_per_class': [0.5111, 0.3333, 0.4944, 0.3824, 0.4368]}
+2026-04-02 20:47:02,976 [INFO] PSI = 0.1054  (threshold=0.2)
+2026-04-02 20:47:02,977 [INFO] 
+--- Time step 4 / 5 ---
+2026-04-02 20:47:02,981 [INFO]   Before update: {'accuracy': 0.52, 'macro_f1': 0.517, 'f1_per_class': [0.55, 0.5833, 0.4416, 0.4444, 0.5657]}
+2026-04-02 20:47:02,981 [INFO] PSI = 0.1418  (threshold=0.2)
+2026-04-02 20:47:02,983 [INFO] 
+--- Time step 5 / 5 ---
+2026-04-02 20:47:02,986 [INFO]   Before update: {'accuracy': 0.3, 'macro_f1': 0.2195, 'f1_per_class': [0.2222, 0.0, 0.2593, 0.1786, 0.4375]}
+2026-04-02 20:47:02,987 [INFO] PSI = 7.7100  (threshold=0.2)
+2026-04-02 20:47:03,067 [INFO]   Epoch 5/10  loss=2.1742
+2026-04-02 20:47:03,126 [INFO]   Epoch 10/10  loss=2.3812
+2026-04-02 20:47:03,135 [INFO]   After  update: {'accuracy': 0.32, 'macro_f1': 0.3186, 'f1_per_class': [0.3077, 0.3492, 0.3373, 0.2687, 0.3303]}
+2026-04-02 20:47:03,170 [INFO] 
+ step  drift_triggered    psi  acc_before  f1_before  acc_after  f1_after  update_time_s  memory_delta_mb
+    1            False 0.1351       0.900     0.9013      0.900    0.9013          0.000             0.00
+    2            False 0.1334       0.895     0.8919      0.895    0.8919          0.000             0.00
+    3            False 0.1054       0.440     0.4316      0.440    0.4316          0.000             0.00
+    4            False 0.1418       0.520     0.5170      0.520    0.5170          0.000             0.00
+    5             True 7.7100       0.300     0.2195      0.320    0.3186          0.136             2.77
+2026-04-02 20:47:04,976 [INFO] 
+=== FINAL RESULTS TABLE ===
+2026-04-02 20:47:04,989 [INFO] 
+ step  drift_triggered    psi  f1_before  f1_after  update_time_s
+    1            False 0.1351     0.9013    0.9013          0.000
+    2            False 0.1334     0.8919    0.8919          0.000
+    3            False 0.1054     0.4316    0.4316          0.000
+    4            False 0.1418     0.5170    0.5170          0.000
+    5             True 7.7100     0.2195    0.3186          0.136
+2026-04-02 20:47:05,080 [INFO] 
+Inference latency: mean=0.192ms  p95=0.333ms
+2026-04-02 20:47:09,952 [INFO] Active Learning + HITL — self-contained demo (synthetic data)
+2026-04-02 20:47:12,506 [INFO] Pre-training proxy model ...
+2026-04-02 20:47:14,092 [INFO] Initial validation metrics: {'accuracy': 0.175, 'macro_f1': 0.1763, 'f1_per_class': [0.1067, 0.1379, 0.1978, 0.2571, 0.1818]}
+2026-04-02 20:47:14,092 [INFO] ============================================================
+2026-04-02 20:47:14,092 [INFO] Starting HITL Simulation — 5 cycles, strategy=entropy
+2026-04-02 20:47:14,092 [INFO] ============================================================
+2026-04-02 20:47:14,115 [INFO] Cycle 1: queried 50 samples from pool of 500
+2026-04-02 20:47:14,122 [INFO]   Human oracle: 7 labels corrected (14.0%)
+2026-04-02 20:47:14,152 [INFO]   Epoch 5/10  loss=3.1007
+2026-04-02 20:47:14,182 [INFO]   Epoch 10/10  loss=2.9011
+2026-04-02 20:47:14,205 [INFO]   Pool size after removal: 450
+2026-04-02 20:47:14,211 [INFO] Cycle 2: queried 50 samples from pool of 450
+2026-04-02 20:47:14,213 [INFO]   Human oracle: 7 labels corrected (14.0%)
+2026-04-02 20:47:14,248 [INFO]   Epoch 5/10  loss=2.8591
+2026-04-02 20:47:14,279 [INFO]   Epoch 10/10  loss=2.7955
+2026-04-02 20:47:14,296 [INFO]   Pool size after removal: 400
+2026-04-02 20:47:14,303 [INFO] Cycle 3: queried 50 samples from pool of 400
+2026-04-02 20:47:14,304 [INFO]   Human oracle: 7 labels corrected (14.0%)
+2026-04-02 20:47:14,336 [INFO]   Epoch 5/10  loss=2.2927
+2026-04-02 20:47:14,360 [INFO]   Epoch 10/10  loss=2.2033
+2026-04-02 20:47:14,386 [INFO]   Pool size after removal: 350
+2026-04-02 20:47:14,391 [INFO] Cycle 4: queried 50 samples from pool of 350
+2026-04-02 20:47:14,392 [INFO]   Human oracle: 7 labels corrected (14.0%)
+2026-04-02 20:47:14,428 [INFO]   Epoch 5/10  loss=2.4591
+2026-04-02 20:47:14,460 [INFO]   Epoch 10/10  loss=2.4934
+2026-04-02 20:47:14,476 [INFO]   Pool size after removal: 300
+2026-04-02 20:47:14,479 [INFO] Cycle 5: queried 50 samples from pool of 300
+2026-04-02 20:47:14,482 [INFO]   Human oracle: 7 labels corrected (14.0%)
+2026-04-02 20:47:14,516 [INFO]   Epoch 5/10  loss=2.2556
+2026-04-02 20:47:14,547 [INFO]   Epoch 10/10  loss=2.1598
+2026-04-02 20:47:14,568 [INFO]   Pool size after removal: 250
+2026-04-02 20:47:14,570 [INFO] 
+=== HITL SIMULATION RESULTS ===
+2026-04-02 20:47:14,576 [INFO] 
+ cycle  n_queried  labeling_reduction  f1_before  f1_after  f1_delta  update_time_s
+     1         50               90.00     0.1763    0.1563   -0.0200          0.058
+     2         50               88.89     0.1563    0.1446   -0.0117          0.062
+     3         50               87.50     0.1446    0.1425   -0.0021          0.054
+     4         50               85.71     0.1425    0.1290   -0.0135          0.064
+     5         50               83.33     0.1290    0.1289   -0.0001          0.062
+2026-04-02 20:47:15,809 [INFO] 
+Post-HITL inference latency: mean=0.215ms  p95=0.420ms
+2026-04-02 20:47:15,809 [INFO] 
+Done.
+2026-04-05 01:20:55,332 [INFO] Continual Learning — self-contained demo (synthetic data)
+2026-04-05 01:21:00,347 [INFO] Pre-training proxy model on reference data ...
+2026-04-05 01:21:02,568 [INFO] ============================================================
+2026-04-05 01:21:02,568 [INFO] Starting Continual Learning Pipeline
+2026-04-05 01:21:02,568 [INFO] ============================================================
+2026-04-05 01:21:02,633 [INFO] 
+--- Time step 1 / 5 ---
+2026-04-05 01:21:02,638 [INFO]   Before update: {'accuracy': 0.9, 'macro_f1': 0.9013, 'f1_per_class': [0.9367, 0.8923, 0.9143, 0.8817, 0.8817]}
+2026-04-05 01:21:02,642 [INFO] PSI = 0.1351  (threshold=0.2)
+2026-04-05 01:21:02,643 [INFO] 
+--- Time step 2 / 5 ---
+2026-04-05 01:21:02,646 [INFO]   Before update: {'accuracy': 0.895, 'macro_f1': 0.8919, 'f1_per_class': [0.8286, 0.9535, 0.9176, 0.8571, 0.9024]}
+2026-04-05 01:21:02,647 [INFO] PSI = 0.1334  (threshold=0.2)
+2026-04-05 01:21:02,649 [INFO] 
+--- Time step 3 / 5 ---
+2026-04-05 01:21:02,651 [INFO]   Before update: {'accuracy': 0.44, 'macro_f1': 0.4316, 'f1_per_class': [0.5111, 0.3333, 0.4944, 0.3824, 0.4368]}
+2026-04-05 01:21:02,652 [INFO] PSI = 0.1054  (threshold=0.2)
+2026-04-05 01:21:02,653 [INFO] 
+--- Time step 4 / 5 ---
+2026-04-05 01:21:02,657 [INFO]   Before update: {'accuracy': 0.52, 'macro_f1': 0.517, 'f1_per_class': [0.55, 0.5833, 0.4416, 0.4444, 0.5657]}
+2026-04-05 01:21:02,658 [INFO] PSI = 0.1418  (threshold=0.2)
+2026-04-05 01:21:02,660 [INFO] 
+--- Time step 5 / 5 ---
+2026-04-05 01:21:02,662 [INFO]   Before update: {'accuracy': 0.3, 'macro_f1': 0.2195, 'f1_per_class': [0.2222, 0.0, 0.2593, 0.1786, 0.4375]}
+2026-04-05 01:21:02,663 [INFO] PSI = 7.7100  (threshold=0.2)
+2026-04-05 01:21:02,737 [INFO]   Epoch 5/10  loss=2.1742
+2026-04-05 01:21:02,794 [INFO]   Epoch 10/10  loss=2.3812
+2026-04-05 01:21:02,802 [INFO]   After  update: {'accuracy': 0.32, 'macro_f1': 0.3186, 'f1_per_class': [0.3077, 0.3492, 0.3373, 0.2687, 0.3303]}
+2026-04-05 01:21:02,830 [INFO] 
+ step  drift_triggered    psi  acc_before  f1_before  acc_after  f1_after  update_time_s  memory_delta_mb
+    1            False 0.1351       0.900     0.9013      0.900    0.9013          0.000             0.00
+    2            False 0.1334       0.895     0.8919      0.895    0.8919          0.000             0.00
+    3            False 0.1054       0.440     0.4316      0.440    0.4316          0.000             0.00
+    4            False 0.1418       0.520     0.5170      0.520    0.5170          0.000             0.00
+    5             True 7.7100       0.300     0.2195      0.320    0.3186          0.129             2.76
+2026-04-05 01:21:04,499 [INFO] 
+=== FINAL RESULTS TABLE ===
+2026-04-05 01:21:04,507 [INFO] 
+ step  drift_triggered    psi  f1_before  f1_after  update_time_s
+    1            False 0.1351     0.9013    0.9013          0.000
+    2            False 0.1334     0.8919    0.8919          0.000
+    3            False 0.1054     0.4316    0.4316          0.000
+    4            False 0.1418     0.5170    0.5170          0.000
+    5             True 7.7100     0.2195    0.3186          0.129
+2026-04-05 01:21:04,641 [INFO] 
+Inference latency: mean=0.263ms  p95=0.475ms
