@@ -52,6 +52,8 @@ QUERY_BUDGET_PER_CYCLE = 50    # max samples queried per HITL cycle
 CONFIDENCE_THRESHOLD   = 0.70  # samples below this threshold are queried
 N_AL_CYCLES            = 5     # number of active learning cycles
 ENTROPY_TOP_K          = 50    # top-K most uncertain samples per cycle
+AL_EPOCHS              = 25    # more epochs per AL cycle for stronger signal
+AL_EWC_LAMBDA          = 50    # lower EWC penalty for AL (allow adaptation)
 
 # ---------------------------------------------------------------------------
 # Query strategies
@@ -107,23 +109,23 @@ def simulate_human_annotation(X: np.ndarray, y_noisy: np.ndarray,
     """
     Simulate a human annotator correcting weak-supervision labels.
 
-    In a real system, this is replaced by an actual labeling interface.
-    Here we simulate it by:
-      - With probability `correction_rate`, returning the true label (y_noisy is assumed
-        ~80% accurate from M1 weak supervision)
-      - Otherwise, returning a random label (annotation error)
+    The oracle uses the same heuristic labeling functions from M1 to produce
+    'ground-truth' labels, then accepts them with probability correction_rate
+    (modelling a human who is 80% consistent with the heuristics).
+    The remaining 20% retain the noisy label, simulating occasional human error.
 
-    Since we have no ground-truth in the Enron corpus, y_noisy from heuristics
-    is treated as the 'best available' signal, so correction_rate=0.80 is
-    consistent with M1's reported label quality.
+    In a real deployment this function is replaced by an actual labeling UI.
     """
-    rng        = np.random.default_rng(RANDOM_SEED)
-    y_corrected = y_noisy.copy()
+    rng = np.random.default_rng(RANDOM_SEED)
+    # Oracle produces heuristic labels (same signal the model was trained on)
+    y_oracle    = heuristic_labeler(X)
+    y_corrected = y_oracle.copy()
+    # Simulate 20% human error by reverting to noisy label
     n_errors    = int((1.0 - correction_rate) * len(y_noisy))
     err_idx     = rng.choice(len(y_noisy), n_errors, replace=False)
-    y_corrected[err_idx] = rng.integers(0, NUM_CLASSES, n_errors)
+    y_corrected[err_idx] = y_noisy[err_idx]
     n_corrections = (y_corrected != y_noisy).sum()
-    logger.info(f"  Human oracle: {n_corrections} labels corrected "
+    logger.info(f"  Human oracle: {n_corrections}/{len(y_noisy)} labels corrected "
                 f"({n_corrections/len(y_noisy)*100:.1f}%)")
     return y_corrected
 
@@ -134,30 +136,32 @@ def heuristic_labeler(X: np.ndarray) -> np.ndarray:
     as proxies for urgency / scheduling keywords.
 
     This mirrors the Snorkel labeling functions from M1's label_generation.py
-    and is used to generate 'noisy' labels for the unlabeled pool.
+    and is used to generate consistent labels for the unlabeled pool.
+    Thresholds are calibrated for the synthetic uniform [0,1] feature space
+    used in this simulation to ensure balanced class coverage.
     """
-    rng    = np.random.default_rng(RANDOM_SEED)
-    labels = np.zeros(len(X), dtype=int)
+    labels   = np.zeros(len(X), dtype=int)
+    row_mean = X.mean(axis=1)
+    row_std  = X.std(axis=1)
+    row_nnz  = (X > 0.5).sum(axis=1) / X.shape[1]   # dense-feature proxy
 
-    # Use feature statistics as heuristic signals
-    row_max   = X.max(axis=1)
-    row_mean  = X.mean(axis=1)
-    row_std   = X.std(axis=1)
-    row_nnz   = (X > 0.01).sum(axis=1) / X.shape[1]  # sparsity proxy
-
+    # Partition into 5 balanced buckets using quantile-based rules
+    mean_q   = np.quantile(row_mean, [0.2, 0.4, 0.6, 0.8])
     for i in range(len(X)):
-        if row_max[i] > 0.9:                           # very high TF-IDF → urgent keyword
-            labels[i] = 0   # Urgent
-        elif row_mean[i] > 0.05 and row_std[i] < 0.1: # moderate, low variance → scheduling
-            labels[i] = 3   # Scheduling
-        elif row_nnz[i] < 0.02:                        # very sparse → spam/low priority
-            labels[i] = 4   # Spam/Low Priority
-        elif row_std[i] > 0.15:                        # high variance → needs reply
-            labels[i] = 1   # Needs Reply
+        m = row_mean[i]
+        if m < mean_q[0]:
+            labels[i] = 4    # Spam / Low Priority  (very low mean activation)
+        elif m < mean_q[1]:
+            labels[i] = 0    # Urgent               (low-moderate)
+        elif m < mean_q[2]:
+            labels[i] = 1    # Needs Reply          (moderate)
+        elif m < mean_q[3]:
+            labels[i] = 3    # Scheduling           (moderate-high)
         else:
-            labels[i] = 2   # Informational
+            labels[i] = 2    # Informational        (high mean activation)
 
     # Inject ~20% noise to simulate weak-supervision imperfection
+    rng       = np.random.default_rng(RANDOM_SEED)
     noise_idx = rng.choice(len(labels), int(0.2 * len(labels)), replace=False)
     labels[noise_idx] = rng.integers(0, NUM_CLASSES, len(noise_idx))
     return labels
@@ -204,11 +208,17 @@ def run_active_learning_cycle(
     # ---- 3. Before metrics ----
     metrics_before = evaluate(model, X_val, y_val, device)
 
-    # ---- 4. Continual update ----
+    # ---- 4. Continual update (AL uses lower EWC lambda + more epochs) ----
+    import continual_learning as _cl
+    _orig_lambda, _orig_epochs = _cl.EWC_LAMBDA, _cl.CL_EPOCHS
+    _cl.EWC_LAMBDA = AL_EWC_LAMBDA
+    _cl.CL_EPOCHS  = AL_EPOCHS
     perf = continual_update(
         model, ewc, X_query, y_labeled, replay_buf,
         device=device, version_tag=f"al_cycle{cycle}"
     )
+    _cl.EWC_LAMBDA = _orig_lambda
+    _cl.CL_EPOCHS  = _orig_epochs
 
     # ---- 5. After metrics ----
     metrics_after = evaluate(model, X_val, y_val, device)
@@ -350,12 +360,14 @@ if __name__ == "__main__":
     INPUT_DIM = 1000
 
     # Reference / validation data
-    X_ref = rng.random((800, INPUT_DIM)).astype(np.float32)
-    y_ref = rng.integers(0, NUM_CLASSES, 800)
-    X_val = rng.random((200, INPUT_DIM)).astype(np.float32)
-    y_val = rng.integers(0, NUM_CLASSES, 200)
+    # Labels are generated by heuristic_labeler (same oracle used during HITL),
+    # ensuring consistency between training signal and annotation oracle.
+    X_ref  = rng.random((800, INPUT_DIM)).astype(np.float32)
+    y_ref  = heuristic_labeler(X_ref)
+    X_val  = rng.random((200, INPUT_DIM)).astype(np.float32)
+    y_val  = heuristic_labeler(X_val)
 
-    # Unlabeled pool
+    # Unlabeled pool (labels unknown to model; oracle reveals them during HITL)
     X_pool = rng.random((500, INPUT_DIM)).astype(np.float32)
 
     # Build + pre-train proxy model
@@ -367,7 +379,7 @@ if __name__ == "__main__":
     loader    = DataLoader(TensorDataset(Xt_ref, yt_ref), batch_size=64, shuffle=True)
 
     logger.info("Pre-training proxy model ...")
-    for _ in range(20):
+    for _ in range(40):
         for xb, yb in loader:
             opt.zero_grad()
             nn.CrossEntropyLoss()(model(xb), yb).backward()
