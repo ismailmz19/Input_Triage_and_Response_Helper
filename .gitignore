@@ -27,3 +27,6 @@ Thumbs.db
 .idea/
 
 !models/label_encoder.joblib
+
+data/processed/features.npz
+README_old.md
